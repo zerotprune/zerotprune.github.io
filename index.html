@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="We introduce the Attention-driven Training-free Efficient Diffusion Model (AT-EDM), a framework that leverages attention maps to perform run-time pruning of redundant tokens during inference without retraining.">
-  <meta name="keywords" content="AT-EDM, token pruning, training-free, diffusion model, attention-driven">
+        content="We propose Zero-TPrune, a training-free token pruning framework that leverages the attention graph of pre-trained Transformer models to produce an importance distribution for tokens via our proposed Weighted Page Rank (WPR) algorithm.">
+  <meta name="keywords" content="Zero-TPrune, token pruning, training-free, vision transformer, attention-driven">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:title" content="AT-EDM: Attention-Driven Training-Free Efficiency Enhancement of Diffusion Models">
+  <meta property="og:title" content="Zero-TPrune: Zero-Shot Token Pruning through Leveraging of the Attention Graph in Pre-Trained Transformers">
   <meta property="og:description"
-        content="We introduce the Attention-driven Training-free Efficient Diffusion Model (AT-EDM), a framework that leverages attention maps to perform run-time pruning of redundant tokens during inference without retraining.">
-  <meta property="og:image" content="https://github.com/atedm/atedm.github.io/blob/main/static/images/teaser.png">
-  <title>AT-EDM: Attention-Driven Training-Free Efficiency Enhancement of Diffusion Models</title>
+        content="We propose Zero-TPrune, a training-free token pruning framework that leverages the attention graph of pre-trained Transformer models to produce an importance distribution for tokens via our proposed Weighted Page Rank (WPR) algorithm.">
+  <meta property="og:image" content="https://github.com/zerotprune/zerotprune.github.io/blob/main/static/images/teaser.png">
+  <title>Zero-TPrune: Zero-Shot Token Pruning through Leveraging of the Attention Graph in Pre-Trained Transformers</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
@@ -39,7 +39,7 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/adobe.svg">
+  <link rel="icon" href="./static/images/Princeton.svg">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -95,32 +95,19 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">AT-EDM: Attention-Driven Training-Free Efficiency Enhancement of Diffusion Models</h1>
+          <h1 class="title is-1 publication-title">Zero-TPrune: Zero-Shot Token Pruning through Leveraging of the Attention Graph in Pre-Trained Transformers</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="https://hongjiew.github.io/">Hongjie Wang</a><sup>1</sup>,</span>
             <span class="author-block">
-              <a href="https://difanliu.github.io/">Difan Liu</a><sup>2</sup>,</span>
-            <span class="author-block">
-              <a href="https://research.adobe.com/person/yan-kang/">Yan Kang</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://yijunmaverick.github.io/">Yijun Li</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://research.adobe.com/person/zhe-lin/">Zhe Lin</a><sup>2</sup>,
-            </span>
+              <a href="https://bhishmadedhia.com/">Bhishma Dedhia</a><sup>1</sup>,</span>
             <span class="author-block">
               <a href="https://www.princeton.edu/~jha/">Niraj K. Jha</a><sup>1</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://lychenyoko.github.io/">Yuchen Liu</a><sup>2</sup>
             </span>
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>Princeton University,</span>
-            <span class="author-block"><sup>2</sup>Adobe Research</span>
+            <span class="author-block"><sup>1</sup>Department of ECE, Princeton University</span>
           </div>
 
           <div class="column has-text-centered">
