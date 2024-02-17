@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="We introduce the Attention-driven Training-free Efficient Diffusion Model (AT-EDM), a framework that leverages attention maps to perform run-time pruning of redundant tokens during inference without retraining.">
+  <meta name="keywords" content="AT-EDM, token pruning, training-free, diffusion model, attention-driven">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="AT-EDM: Attention-Driven Training-Free Efficiency Enhancement of Diffusion Models">
+  <meta property="og:description"
+        content="We introduce the Attention-driven Training-free Efficient Diffusion Model (AT-EDM), a framework that leverages attention maps to perform run-time pruning of redundant tokens during inference without retraining.">
+  <meta property="og:image" content="https://github.com/atedm/atedm.github.io/blob/main/static/images/teaser.png">
+  <title>AT-EDM: Attention-Driven Training-Free Efficiency Enhancement of Diffusion Models</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+  <script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/adobe.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav> -->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">AT-EDM: Attention-Driven Training-Free Efficiency Enhancement of Diffusion Models</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://hongjiew.github.io/">Hongjie Wang</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://difanliu.github.io/">Difan Liu</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://research.adobe.com/person/yan-kang/">Yan Kang</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://yijunmaverick.github.io/">Yijun Li</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://research.adobe.com/person/zhe-lin/">Zhe Lin</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.princeton.edu/~jha/">Niraj K. Jha</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://lychenyoko.github.io/">Yuchen Liu</a><sup>2</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Princeton University,</span>
+            <span class="author-block"><sup>2</sup>Adobe Research</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2305.17328"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper (coming soon)</span>
+                </a>
+              </span>
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>Slides</span>
+                </a>
+              </span> -->
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://git.azr.adobeitc.com/adobe-research/EfficientDM"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (coming soon)</span>
+                  </a>
+              <!-- </span> -->
+              <!-- Dataset Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/teaser.png" 
+           alt="Teaser image." 
+           class="teaser-image">
+      <h2 class="subtitle has-text-centered">
+        Compared to the full-size model (top row), AT-EDM accelerated model (bottom row) has around 40% FLOPs reduction 
+        while enjoying competitive generation quality on various aspect ratios.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<!-- <section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/steve.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/chair-tp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/shiba.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/fullbody.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/blueshirt.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-mask">
+          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/mask.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-coffee">
+          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/coffee.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-toby">
+          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/toby2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Diffusion models (DMs) have exhibited superior performance in generating high-quality and diverse images. 
+            However, this exceptional performance comes at the cost of expensive architectural design, particularly 
+            with the attention module heavily used in leading models. Existing works mainly adopt a retraining process 
+            to enhance the efficiency which is computational expensive and less scalable.
+          </p>
+          <p>
+            To this end, we introduce the Attention-driven Training-free Efficient Diffusion Model 
+            (<b>AT-EDM</b>), 
+            a framework that leverages attention maps to perform run-time pruning of redundant tokens during 
+            inference without retraining. 
+          </p>
+          <p>
+            Specifically, we develop a single denoising step pruning strategy, 
+            Generalized Weighted Page Rank (G-WPR), to identify redundant tokens 
+            and a similarity-based recovery method to restore tokens for convolution operation.
+            Additionally, the Denoising-Steps-Aware Pruning (DSAP) is proposed to adjust the 
+            pruning budget across different denoising timesteps for better generation quality.
+          </p>
+          <p>
+            Extensive evaluations show that AT-EDM performs favorably against prior arts in terms of 
+            efficiency (e.g., 38.8% FLOPs saving and up to 1.53\(\times\) speedup over Stable Diffusion XL) 
+            while maintaining nearly the same FID and CLIP scores with the full model.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Framework Overview</h2>
+        <img src="./static/images/overview.png" 
+             alt="Framework overview." 
+             class="framework-image">
+             <div class="content has-text-justified">
+              <p>
+                Overview of our proposed efficiency enhancement framework <b>AT-EDM</b>. 
+                <b>Single Denoising Step Token Pruning</b>: (1) We get the attention map from self-attention; 
+                (2) We calculate the importance score for each token using G-WPR; 
+                (3) We generate pruning masks; (4) We apply the masks on tokens after the feed-forward network to 
+                realize token pruning; (5) We repeat Steps (1)-(4) for each consecutive attention layer; 
+                (6) Before passing feature maps to the ResNet block, we recover pruned tokens through 
+                similarity-based copy. <b>Denoising-Steps-Aware Pruning Schedule (DSAP)</b>:  In early steps, we propose 
+                to prune fewer tokens and to have less FLOPs reduction. In the latter steps, we prune more 
+                aggressively for higher speedup.
+              </p>
+            </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">AT-EDM Shows High Efficiency and Fidelity </h2>
+        <div class="content has-text-justified">
+          <p>
+            We report FID and CLIP scores of zero-shot image generation on the MS-COCO 2017 validation dataset.
+          </p>
+        </div>
+      </div>
+    </div>
+      
+    <div class="columns is-centered">
+      <!-- FID-CLIP Curves. -->
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-4">FID-CLIP Curves</h2>
+          <img src="./static/images/fid-clip.png" 
+               alt="FID-CLIP curves." 
+               class="fid-clip-image">
+          <p>
+            The used CFG scales are [1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 7.0, 9.0, 12.0, 15.0].
+          </p>
+        </div>
+      </div>
+      <!--/ FID-CLIP Curves. -->
+
+      <!-- FLOPs Budgets. -->
+      <div class="column">
+        <h2 class="title is-4">Various FLOPs Budgets</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <img src="./static/images/various_flops.png" 
+                 alt="FLOPs budget." 
+                 class="flops-image"
+                 width="82%"
+                 height="auto">
+            <p>
+              We generate all images with the CFG-scale of 7.0, except for SD-XL\(^\dagger\), 
+              for which we use the CFG-scale of 4.0.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ FLOPs Budgets. -->
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-4">Latency Analysis</h2>
+        <div class="content has-text-justified">
+          <p>
+            Comparison between sampling latency in different cases. 
+            AT-EDM\(^\dagger\) does not deploying pruning at the second feature level 
+            while keeping other pruning rates the same as AT-EDM. Fused Operation (<b>FO</b>): 
+            libraries like xformers to boost attention computation. Current Implementation (<b>CI</b>): 
+            not provide attention maps as intermediate results. Desired Implementation (<b>DI</b>): provide
+            attention maps as intermediate results. 
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <!-- FID-CLIP Curves. -->
+      <div class="column">
+        <div class="content">
+          <img src="./static/images/latency.png" 
+               alt="FID-CLIP curves." 
+               class="fid-clip-image">
+        </div>
+      </div>
+      <!--/ FID-CLIP Curves. -->
+
+      <!-- FLOPs Budgets. -->
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column content">
+            <img src="./static/images/latency_bd.png" 
+                 alt="FLOPs budget." 
+                 class="flops-image"
+                 width="100%"
+                 height="auto">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ FLOPs Budgets. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Animation. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Off-the-Shelf Visual Examples</h2>
+
+        <div class="content has-text-centered">
+          <p>
+            Visual examples of SD-XL@6.7TFLOPs, ToMe@4.1TFLOPs, and AT-EDM@4.1TFLOPs.
+          </p>
+        </div>
+
+        <img src="./static/images/example1.png" 
+             alt="visual example image." 
+             class="example-image">
+        
+        <h3 class="title is-4"></h3>
+
+        <div class="content has-text-centered">
+          <p>
+            Visual examples of ToMe and AT-EDM with various FLOPs budgets.
+          </p>
+        </div>
+        
+        <img src="./static/images/example2.png"
+              alt="visual example image2." 
+              class="example-image">
+
+        <!-- Interpolating. -->
+        <!-- <h3 class="title is-4">Interpolating states</h3>
+        <div class="content has-text-justified">
+          <p>
+            We can also animate the scene by interpolating the deformation latent codes of two input
+            frames. Use the slider here to linearly interpolate between the left frame and the right
+            frame.
+          </p>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_start.jpg"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+            <p>Start Frame</p>
+          </div>
+          <div class="column interpolation-video-column">
+            <div id="interpolation-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-slider"
+                   step="1" min="0" max="100" value="0" type="range">
+          </div>
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_end.jpg"
+                 class="interpolation-image"
+                 alt="Interpolation end reference image."/>
+            <p class="is-bold">End Frame</p>
+          </div>
+        </div>
+        <br/> -->
+        <!--/ Interpolating. -->
+
+        <!-- Re-rendering. -->
+        <!-- <h3 class="title is-4">Re-rendering the input video</h3>
+        <div class="content has-text-justified">
+          <p>
+            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
+            viewpoint such as a stabilized camera by playing back the training deformations.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="./static/videos/replay.mp4"
+                    type="video/mp4">
+          </video>
+        </div> -->
+        <!--/ Re-rendering. -->
+
+      </div>
+    </div>
+    <!--/ Animation. -->
+
+
+    <!-- Concurrent Work. -->
+    <!-- <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related Links</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            There's a lot of excellent work that was introduced around the same time as ours.
+          </p>
+          <p>
+            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
+          </p>
+          <p>
+            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
+            both use deformation fields to model non-rigid scenes.
+          </p>
+          <p>
+            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
+          </p>
+          <p>
+            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
+          </p>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Concurrent Work. -->
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{wang2024atedm,
+  author    = {Wang, Hongjie and Liu, Difan and Kang, Yan and Li, Yijun and Lin, Zhe and Jha, Niraj K. and Liu, Yuchen},
+  title     = {Attention-Driven Training-Free Efficiency Enhancement of Diffusion Models},
+  journal   = {arXiv preprint arXiv:2402.xxxxx},
+  year      = {2024},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website source based on <a href="https://github.com/nerfies/nerfies.github.io">this source code</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
