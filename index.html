@@ -250,28 +250,28 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Diffusion models (DMs) have exhibited superior performance in generating high-quality and diverse images. 
-            However, this exceptional performance comes at the cost of expensive architectural design, particularly 
-            with the attention module heavily used in leading models. Existing works mainly adopt a retraining process 
-            to enhance the efficiency which is computational expensive and less scalable.
+            Deployment of Transformer models on edge devices is becoming increasingly challenging due to the exponentially growing 
+            inference cost that scales quadratically with the number of tokens in the input sequence. Toke pruning is an emerging 
+            solution to address this challenge due to its ease of deployment on various Transformer backbones. However, most token 
+            pruning methods require computationally expensive fine-tuning, which is undesirable in many edge deployment cases.
           </p>
           <p>
-            To this end, we introduce the Attention-driven Training-free Efficient Diffusion Model 
-            (<b>AT-EDM</b>), 
-            a framework that leverages attention maps to perform run-time pruning of redundant tokens during 
-            inference without retraining. 
+            In this work, we propose <b>Zero-TPrune</b>, the first zero-shot method that considers both the importance and similarity of 
+            tokens in performing token pruning. It leverages the attention graph of pre-trained Transformer models to produce an 
+            importance distribution for tokens via our proposed Weighted Page Rank (WPR) algorithm. This distribution further guides 
+            token partitioning for efficient similarity-based pruning.
           </p>
           <p>
-            Specifically, we develop a single denoising step pruning strategy, 
-            Generalized Weighted Page Rank (G-WPR), to identify redundant tokens 
-            and a similarity-based recovery method to restore tokens for convolution operation.
-            Additionally, the Denoising-Steps-Aware Pruning (DSAP) is proposed to adjust the 
-            pruning budget across different denoising timesteps for better generation quality.
+             Due to the elimination of the fine-tuning overhead, Zero-TPrune can prune large models at negligible computational cost, 
+             switch between different pruning configurations at no computational cost, and perform hyperparameter tuning efficiently. 
           </p>
           <p>
-            Extensive evaluations show that AT-EDM performs favorably against prior arts in terms of 
-            efficiency (e.g., 38.8% FLOPs saving and up to 1.53\(\times\) speedup over Stable Diffusion XL) 
-            while maintaining nearly the same FID and CLIP scores with the full model.
+            We evaluate the performance of Zero-TPrune on vision tasks by applying it to various vision Transformer backbones and 
+            testing them on ImageNet. Without any fine-tuning, Zero-TPrune reduces the FLOPs cost of DeiT-S by 34.7% and improves 
+            its throughput by 45.3% with only 0.4% accuracy loss. Compared with state-of-the-art pruning methods that require 
+            fine-tuning, Zero-TPrune not only eliminates the need for fine-tuning after pruning but also does so with only 0.1% 
+            accuracy loss. Compared with state-of-the-art fine-tuning-free pruning methods, Zero-TPrune reduces accuracy loss by 
+            up to 49% with the same or higher throughput.
           </p>
         </div>
       </div>
