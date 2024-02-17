@@ -176,8 +176,9 @@
            alt="Teaser image." 
            class="teaser-image">
       <h2 class="subtitle has-text-centered">
-        Compared to the full-size model (top row), AT-EDM accelerated model (bottom row) has around 40% FLOPs reduction 
-        while enjoying competitive generation quality on various aspect ratios.
+        Most existing methods require re-training of the model after deploying it; each different pruning configuration requires separate re-training of the model, which is 
+        extremely expensive. On the contrary, Zero-TPrune is training-free and can switch between different pruning configurations 
+        at no computational cost. This benefits from our graph-based algorithm exploiting correlations between image tokens.
       </h2>
     </div>
   </div>
