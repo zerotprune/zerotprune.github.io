@@ -1,14 +1,14 @@
-# AT-EDM
+# Zero-TPrune
 
-This is the repository that contains source code for the [AT-EDM website](https://atedm.github.io).
+This is the repository that contains source code for the [Zero-TPrune website](https://zerotprune.github.io).
 
-If you find AT-EDM useful for your work please cite:
+If you find Zero-TPrune useful for your work please cite:
 ```
-@article{wang2024atedm,
-  author    = {Wang, Hongjie and Liu, Difan and Kang, Yan and Li, Yijun and Lin, Zhe and Jha, Niraj K. and Liu, Yuchen},
-  title     = {Attention-Driven Training-Free Efficiency Enhancement of Diffusion Models},
-  journal   = {arXiv preprint arXiv:2402.xxxxx},
-  year      = {2024},
+@article{wang2023zero,
+  title={Zero-TPrune: Zero-Shot Token Pruning through Leveraging of the Attention Graph in Pre-Trained Transformers},
+  author={Wang, Hongjie and Dedhia, Bhishma and Jha, Niraj K.},
+  journal={arXiv preprint arXiv:2305.17328},
+  year={2023}
 }
 ```
 
