@@ -287,15 +287,11 @@
              class="framework-image">
              <div class="content has-text-justified">
               <p>
-                Overview of our proposed efficiency enhancement framework <b>AT-EDM</b>. 
-                <b>Single Denoising Step Token Pruning</b>: (1) We get the attention map from self-attention; 
-                (2) We calculate the importance score for each token using G-WPR; 
-                (3) We generate pruning masks; (4) We apply the masks on tokens after the feed-forward network to 
-                realize token pruning; (5) We repeat Steps (1)-(4) for each consecutive attention layer; 
-                (6) Before passing feature maps to the ResNet block, we recover pruned tokens through 
-                similarity-based copy. <b>Denoising-Steps-Aware Pruning Schedule (DSAP)</b>:  In early steps, we propose 
-                to prune fewer tokens and to have less FLOPs reduction. In the latter steps, we prune more 
-                aggressively for higher speedup.
+                The overall Zero-TPrune framework. Pruning layers can be inserted between Transformer blocks to reduce 
+                the number of tokens. Pruning layers comprise <b>I-stage</b> and <b>S-stage</b>: <b>I-stage</b> aims at 
+                pruning unimportant tokens of an image, such as background tokens (see (b)); <b>S-stage</b> aims at 
+                pruning tokens that are too similar to others, such as repetitive texture tokens (see (c)). 
+                A combination of the stages then maximally exploits token redundancy (see (d)).
               </p>
             </div>
       </div>
