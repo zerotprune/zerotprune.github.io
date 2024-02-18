@@ -309,7 +309,7 @@
         <h2 class="title is-3">Zero-TPrune Shows High Efficiency while Keeping Accuracy </h2>
         <div class="content has-text-justified">
           <p>
-            We report FID and CLIP scores of zero-shot image generation on the MS-COCO 2017 validation dataset.
+            We report the top-1 accuracy, parameters, FLOPs and throughput of the pruned models on ImageNet. We evaluate the models on 224px images unless otherwise noted.
           </p>
         </div>
       </div>
@@ -319,12 +319,12 @@
       <!-- FID-CLIP Curves. -->
       <div class="column">
         <div class="content">
-          <h2 class="title is-4">FID-CLIP Curves</h2>
-          <img src="./static/images/fid-clip.png" 
-               alt="FID-CLIP curves." 
-               class="fid-clip-image">
+          <h2 class="title is-4">Ablation Study</h2>
+          <img src="./static/images/ablation.png" 
+               alt="Ablation study." 
+               class="ablation-image">
           <p>
-            The used CFG scales are [1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 7.0, 9.0, 12.0, 15.0].
+            Contribution breakdown of the different techniques employed in Zero-TPrune.
           </p>
         </div>
       </div>
@@ -332,17 +332,17 @@
 
       <!-- FLOPs Budgets. -->
       <div class="column">
-        <h2 class="title is-4">Various FLOPs Budgets</h2>
+        <h2 class="title is-4">Compare with Fine-Tuning-Required Methods</h2>
         <div class="columns is-centered">
           <div class="column content">
-            <img src="./static/images/various_flops.png" 
+            <img src="./static/images/accu_flops.png" 
                  alt="FLOPs budget." 
                  class="flops-image"
                  width="82%"
                  height="auto">
             <p>
-              We generate all images with the CFG-scale of 7.0, except for SD-XL\(^\dagger\), 
-              for which we use the CFG-scale of 4.0.
+              Performance comparison between Zero-TPrune and state-of-the-art fine-tuning-required methods. The performance
+              of fine-tuning-required methods without fine-tuning equals to the performance of randomly pruning tokens.
             </p>
           </div>
         </div>
