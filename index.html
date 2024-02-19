@@ -338,11 +338,14 @@
             <img src="./static/images/accu_flops.png" 
                  alt="FLOPs budget." 
                  class="flops-image"
-                 width="100%"
+                 width="80%"
                  height="auto">
             <p>
               Performance comparison between Zero-TPrune and state-of-the-art fine-tuning-required methods. The performance
-              of fine-tuning-required methods without fine-tuning equals to the performance of randomly pruning tokens.
+              of fine-tuning-required methods w/o fine-tuning equals to the performance of randomly pruning tokens. 
+              Zero-TPrune can be easily applied to larger models (e.g., given a 13.6 GFLOPS budget on DeiT-B) for higher accuracy. 
+              On the contrary, applying DynamicViT and A-ViT to large models is very computationally expensive due to their 
+              expensive fine-tuning process.
             </p>
           </div>
         </div>
