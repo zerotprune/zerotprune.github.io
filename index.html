@@ -393,9 +393,12 @@
       <div class="column is-full-width">
         <h2 class="title is-3">Off-the-Shelf Visual Examples</h2>
 
-        <div class="content has-text-centered">
+        <div class="content has-text-justified">
           <p>
-            Visual examples of SD-XL@6.7TFLOPs, ToMe@4.1TFLOPs, and AT-EDM@4.1TFLOPs.
+            Visualized examples of the pruning process conducted by Zero-TPrune. Images are randomly selected 
+            from ImageNet validation dataset. When the pruning rate is aggressive and the main object occupies 
+            most of the image area, it is not enough to only prune background tokens. Zero-TPrune exploits similarity 
+            between main object tokens and prunes redundant ones.
           </p>
         </div>
 
@@ -403,76 +406,16 @@
              alt="visual example image." 
              class="example-image">
         
-        <h3 class="title is-4"></h3>
-
-        <div class="content has-text-centered">
-          <p>
-            Visual examples of ToMe and AT-EDM with various FLOPs budgets.
-          </p>
-        </div>
+        <img src="./static/images/example2.png" 
+             alt="visual example image." 
+             class="example-image">
         
-        <img src="./static/images/example2.png"
-              alt="visual example image2." 
-              class="example-image">
-
-        <!-- Interpolating. -->
-        <!-- <h3 class="title is-4">Interpolating states</h3>
-        <div class="content has-text-justified">
-          <p>
-            We can also animate the scene by interpolating the deformation latent codes of two input
-            frames. Use the slider here to linearly interpolate between the left frame and the right
-            frame.
-          </p>
-        </div>
-        <div class="columns is-vcentered interpolation-panel">
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_start.jpg"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-            <p>Start Frame</p>
-          </div>
-          <div class="column interpolation-video-column">
-            <div id="interpolation-image-wrapper">
-              Loading...
-            </div>
-            <input class="slider is-fullwidth is-large is-info"
-                   id="interpolation-slider"
-                   step="1" min="0" max="100" value="0" type="range">
-          </div>
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_end.jpg"
-                 class="interpolation-image"
-                 alt="Interpolation end reference image."/>
-            <p class="is-bold">End Frame</p>
-          </div>
-        </div>
-        <br/> -->
-        <!--/ Interpolating. -->
-
-        <!-- Re-rendering. -->
-        <!-- <h3 class="title is-4">Re-rendering the input video</h3>
-        <div class="content has-text-justified">
-          <p>
-            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
-            viewpoint such as a stabilized camera by playing back the training deformations.
-          </p>
-        </div>
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 controls
-                 muted
-                 preload
-                 playsinline
-                 width="75%">
-            <source src="./static/videos/replay.mp4"
-                    type="video/mp4">
-          </video>
-        </div> -->
-        <!--/ Re-rendering. -->
-
+        <img src="./static/images/example3.png" 
+             alt="visual example image." 
+             class="example-image">
+    
       </div>
     </div>
-    <!--/ Animation. -->
 
 
     <!-- Concurrent Work. -->
@@ -511,7 +454,7 @@
     <h2 class="title">BibTeX</h2>
     <pre><code>@article{wang2023zero,
       title={Zero-TPrune: Zero-Shot Token Pruning through Leveraging of the Attention Graph in Pre-Trained Transformers},
-      author={Wang, Hongjie and Dedhia, Bhishma and Jha, Niraj K},
+      author={Wang, Hongjie and Dedhia, Bhishma and Jha, Niraj K.},
       journal={arXiv preprint arXiv:2305.17328},
       year={2023}
 }</code></pre>
