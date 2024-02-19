@@ -332,9 +332,9 @@
 
       <!-- FLOPs Budgets. -->
       <div class="column">
-        <h2 class="title is-4">Compare with Fine-Tuning-Required Methods</h2>
+        <h2 class="title is-4">Comparison with Fine-Tuning-Required Methods</h2>
         <div class="columns is-centered">
-          <div class="column content">
+          <div class="column is-full-width">
             <img src="./static/images/accu_flops.png" 
                  alt="FLOPs budget." 
                  class="flops-image"
@@ -355,17 +355,17 @@
 
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-4">Latency Analysis</h2>
+        <h2 class="title is-4">Comparison with Fine-Tuning-Free Methods </h2>
         <div class="content has-text-justified">
           <p>
-            Comparison between sampling latency in different cases. 
-            AT-EDM\(^\dagger\) does not deploying pruning at the second feature level 
-            while keeping other pruning rates the same as AT-EDM. Fused Operation (<b>FO</b>): 
-            libraries like xformers to boost attention computation. Current Implementation (<b>CI</b>): 
-            not provide attention maps as intermediate results. Desired Implementation (<b>DI</b>): provide
-            attention maps as intermediate results. 
+            Comparison between Zero-TPrune and state-of-the-art fine-tuning-free methods. The backbone model is DeiT-S.
           </p>
         </div>
+        <img src="./static/images/accu_flops2.png" 
+             alt="FLOPs budget." 
+             class="flops-image"
+             width="100%"
+             height="auto">
       </div>
     </div>
 
