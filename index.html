@@ -176,8 +176,8 @@
            alt="Teaser image." 
            class="teaser-image">
       <h2 class="subtitle has-text-centered">
-        Zero-TPrune is training-free and can switch between different pruning configurations at no computational cost. 
-        This benefits from our graph-based algorithm exploiting correlations between image tokens.
+        Comparison between Zero-TPrune and existing efficiency enhancement methods. The training-free characteristic of 
+        Zero-TPrune benefits from our graph-based algorithm exploiting correlations between image tokens.
       </h2>
     </div>
   </div>
@@ -332,7 +332,7 @@
 
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Zero-TPrune Shows High Efficiency while Keeping Accuracy </h2>
+        <h2 class="title is-3">Zero-TPrune Shows High Efficiency while Maintaining Accuracy </h2>
         <div class="content has-text-justified">
           <p>
             We report the top-1 accuracy, parameters, FLOPs and throughput of the pruned models on ImageNet. We evaluate the models on 224px images unless otherwise noted.
@@ -368,7 +368,7 @@
                  height="auto">
             <p>
               Performance comparison between Zero-TPrune and state-of-the-art fine-tuning-required methods. The performance
-              of DynamicViT and A-ViT w/o fine-tuning equals to the performance of randomly dropping tokens. 
+              of DynamicViT and A-ViT w/o fine-tuning equals the performance of randomly dropping tokens. 
               Zero-TPrune can be easily applied to larger models (e.g., given a 13.6 GFLOPS budget on DeiT-B) for higher accuracy. 
               On the contrary, applying DynamicViT and A-ViT to large models is very computationally expensive due to their 
               expensive fine-tuning process.
